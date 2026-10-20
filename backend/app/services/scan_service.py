@@ -13,14 +13,14 @@ from app.models.device import Device
 from app.models.area import Area
 from app.models.visitor import Visitor
 
+from app.core.websocket_manager import manager
+
 logger = logging.getLogger(__name__)
 
 
 async def broadcast_scan_event(event_data: dict):
-    """Phase 3 will implement WebSocket broadcast. Currently a no-op."""
-    # TODO(Sanjeevi): Implement WebSocket broadcast in Phase 3
-    logger.info("Broadcast scan event hook called: %s", event_data.get("event_id"))
-    pass
+    """Broadcast scan event to all connected WebSocket clients."""
+    await manager.broadcast({"type": "scan", "data": event_data})
 
 
 async def process_scan(

@@ -8,6 +8,7 @@ from app.schemas.criterion import CriterionCreate, CriterionUpdate, CriterionRes
 from app.schemas.assessment import AssessmentCreate, AssessmentUpdate, AssessmentResponse, AssessmentScoreResponse
 from app.schemas.setting import SettingCreate, SettingUpdate, SettingResponse
 from app.schemas.scan import ScanRequest, ScanResponse, ScanEventResponse, CaptureNextResponse
+from app.schemas.device import DeviceHeartbeatResponse, DeviceStatusResponse
 
 __all__ = [
     "PaginatedResponse",
@@ -20,4 +21,5 @@ __all__ = [
     "AssessmentCreate", "AssessmentUpdate", "AssessmentResponse", "AssessmentScoreResponse",
     "SettingCreate", "SettingUpdate", "SettingResponse",
     "ScanRequest", "ScanResponse", "ScanEventResponse", "CaptureNextResponse",
+    "DeviceHeartbeatResponse", "DeviceStatusResponse",
 ]
