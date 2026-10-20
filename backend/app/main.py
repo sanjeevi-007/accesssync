@@ -2,7 +2,17 @@ from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from app.config import get_settings
-from app.routers.auth import router as auth_router
+from app.routers import (
+    auth_router,
+    libraries_router,
+    areas_router,
+    cards_router,
+    instructions_router,
+    criteria_router,
+    assessments_router,
+    settings_router,
+    visitors_router,
+)
 
 settings = get_settings()
 
@@ -23,6 +33,14 @@ app.add_middleware(
 
 # Include routers
 app.include_router(auth_router)
+app.include_router(libraries_router)
+app.include_router(areas_router)
+app.include_router(cards_router)
+app.include_router(instructions_router)
+app.include_router(criteria_router)
+app.include_router(assessments_router)
+app.include_router(settings_router)
+app.include_router(visitors_router)
 
 
 # HTTPException handler — preserves structured error shape
