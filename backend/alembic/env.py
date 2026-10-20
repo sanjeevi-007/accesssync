@@ -14,6 +14,7 @@ if str(backend_dir) not in sys.path:
 
 from app.config import get_settings
 from app.database import Base
+import app.models
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -34,6 +35,13 @@ target_metadata = Base.metadata
 # ... etc.
 
 
+def get_db_url() -> str:
+    url = get_settings().DATABASE_URL
+    if url.startswith("sqlite:///./database/") and not Path("./database").exists() and Path("../database").exists():
+        url = url.replace("sqlite:///./database/", "sqlite:///../database/")
+    return url
+
+
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
@@ -46,7 +54,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = get_settings().DATABASE_URL
+    url = get_db_url()
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -66,7 +74,7 @@ def run_migrations_online() -> None:
 
     """
     configuration = config.get_section(config.config_ini_section, {})
-    configuration["sqlalchemy.url"] = get_settings().DATABASE_URL
+    configuration["sqlalchemy.url"] = get_db_url()
     connectable = engine_from_config(
         configuration,
         prefix="sqlalchemy.",
