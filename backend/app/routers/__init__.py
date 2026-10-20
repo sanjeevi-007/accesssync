@@ -7,6 +7,7 @@ from app.routers.criteria import router as criteria_router
 from app.routers.assessments import router as assessments_router
 from app.routers.settings import router as settings_router
 from app.routers.visitors import router as visitors_router
+from app.routers.scans import router as scans_router
 
 __all__ = [
     "auth_router",
@@ -18,4 +19,5 @@ __all__ = [
     "assessments_router",
     "settings_router",
     "visitors_router",
+    "scans_router",
 ]

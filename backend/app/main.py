@@ -12,6 +12,7 @@ from app.routers import (
     assessments_router,
     settings_router,
     visitors_router,
+    scans_router,
 )
 
 settings = get_settings()
@@ -41,6 +42,7 @@ app.include_router(criteria_router)
 app.include_router(assessments_router)
 app.include_router(settings_router)
 app.include_router(visitors_router)
+app.include_router(scans_router)
 
 
 # HTTPException handler — preserves structured error shape

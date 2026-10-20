@@ -7,6 +7,7 @@ from app.schemas.instruction import InstructionCreate, InstructionUpdate, Instru
 from app.schemas.criterion import CriterionCreate, CriterionUpdate, CriterionResponse
 from app.schemas.assessment import AssessmentCreate, AssessmentUpdate, AssessmentResponse, AssessmentScoreResponse
 from app.schemas.setting import SettingCreate, SettingUpdate, SettingResponse
+from app.schemas.scan import ScanRequest, ScanResponse, ScanEventResponse, CaptureNextResponse
 
 __all__ = [
     "PaginatedResponse",
@@ -18,4 +19,5 @@ __all__ = [
     "CriterionCreate", "CriterionUpdate", "CriterionResponse",
     "AssessmentCreate", "AssessmentUpdate", "AssessmentResponse", "AssessmentScoreResponse",
     "SettingCreate", "SettingUpdate", "SettingResponse",
+    "ScanRequest", "ScanResponse", "ScanEventResponse", "CaptureNextResponse",
 ]
