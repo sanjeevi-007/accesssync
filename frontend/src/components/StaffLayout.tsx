@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { apiClient } from '../api/client';
+import { useDeviceStatus } from '../hooks/useDeviceStatus';
 import {
   LayoutDashboard,
   CreditCard,
@@ -20,18 +20,12 @@ import {
   User as UserIcon,
 } from 'lucide-react';
 
-interface DeviceStatus {
-  device_id: string;
-  status: 'online' | 'offline' | 'never_connected';
-  last_seen_at: string | null;
-}
-
 export const StaffLayout: React.FC = () => {
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [deviceStatuses, setDeviceStatuses] = useState<DeviceStatus[]>([]);
+  const { overallStatus } = useDeviceStatus();
 
   // Navigation items with icons and explicit text labels
   const navItems = [
@@ -49,44 +43,10 @@ export const StaffLayout: React.FC = () => {
   const currentNav = navItems.find((item) => location.pathname.startsWith(item.to));
   const pageTitle = currentNav ? currentNav.label : 'Staff Portal';
 
-  // Poll device status every 5 seconds
-  useEffect(() => {
-    let isMounted = true;
-    const fetchStatus = async () => {
-      try {
-        const statuses = await apiClient<DeviceStatus[]>('/api/devices/status');
-        if (isMounted) {
-          setDeviceStatuses(statuses);
-        }
-      } catch {
-        // Silently catch to avoid intrusive alerts during polling
-      }
-    };
-
-    fetchStatus();
-    const interval = setInterval(fetchStatus, 5000);
-    return () => {
-      isMounted = false;
-      clearInterval(interval);
-    };
-  }, []);
-
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
-
-  // Compute aggregate device status: Online, Offline, or Never connected
-  let overallStatus: 'online' | 'offline' | 'never_connected' = 'never_connected';
-  if (deviceStatuses.length > 0) {
-    if (deviceStatuses.some((d) => d.status === 'online')) {
-      overallStatus = 'online';
-    } else if (deviceStatuses.some((d) => d.status === 'offline')) {
-      overallStatus = 'offline';
-    } else {
-      overallStatus = 'never_connected';
-    }
-  }
 
   return (
     <div className="min-h-screen bg-[var(--color-bg)] flex flex-col">

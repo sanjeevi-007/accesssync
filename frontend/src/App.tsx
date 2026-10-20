@@ -11,11 +11,12 @@ import { AccessibilityInfoPage } from './pages/AccessibilityInfoPage';
 import { ChangePasswordPage } from './pages/ChangePasswordPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
+import { DashboardPage } from './pages/DashboardPage';
+import { CardsPage } from './pages/CardsPage';
+import { LibraryPage } from './pages/LibraryPage';
+import { InstructionsPage } from './pages/InstructionsPage';
+
 import {
-  DashboardPlaceholder,
-  CardsPlaceholder,
-  LibraryPlaceholder,
-  InstructionsPlaceholder,
   AssessmentsPlaceholder,
   ScansPlaceholder,
   ReportsPlaceholder,
@@ -53,10 +54,10 @@ export const App: React.FC = () => {
             }
           >
             <Route index element={<Navigate to="/app/dashboard" replace />} />
-            <Route path="dashboard" element={<DashboardPlaceholder />} />
-            <Route path="cards" element={<CardsPlaceholder />} />
-            <Route path="library" element={<LibraryPlaceholder />} />
-            <Route path="instructions" element={<InstructionsPlaceholder />} />
+            <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="cards" element={<CardsPage />} />
+            <Route path="library" element={<LibraryPage />} />
+            <Route path="instructions" element={<InstructionsPage />} />
             <Route path="assessments" element={<AssessmentsPlaceholder />} />
             <Route path="scans" element={<ScansPlaceholder />} />
             <Route path="reports" element={<ReportsPlaceholder />} />
