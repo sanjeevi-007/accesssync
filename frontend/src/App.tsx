@@ -15,9 +15,9 @@ import { DashboardPage } from './pages/DashboardPage';
 import { CardsPage } from './pages/CardsPage';
 import { LibraryPage } from './pages/LibraryPage';
 import { InstructionsPage } from './pages/InstructionsPage';
+import { AssessmentsPage } from './pages/AssessmentsPage';
 
 import {
-  AssessmentsPlaceholder,
   ScansPlaceholder,
   ReportsPlaceholder,
   SettingsPlaceholder,
@@ -58,7 +58,7 @@ export const App: React.FC = () => {
             <Route path="cards" element={<CardsPage />} />
             <Route path="library" element={<LibraryPage />} />
             <Route path="instructions" element={<InstructionsPage />} />
-            <Route path="assessments" element={<AssessmentsPlaceholder />} />
+            <Route path="assessments" element={<AssessmentsPage />} />
             <Route path="scans" element={<ScansPlaceholder />} />
             <Route path="reports" element={<ReportsPlaceholder />} />
             <Route path="settings" element={<SettingsPlaceholder />} />
