@@ -71,7 +71,10 @@ def test_seed_creates_expected_data(db_session):
 
 def test_seed_idempotency(db_session):
     """Test that running seed a second time creates no duplicates."""
-    # Capture counts before
+    # First seed run
+    seed()
+
+    # Capture counts after first seed
     lib_count_1 = db_session.query(Library).count()
     area_count_1 = db_session.query(Area).count()
     visitor_count_1 = db_session.query(Visitor).count()

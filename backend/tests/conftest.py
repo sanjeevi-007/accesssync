@@ -2,26 +2,50 @@ import os
 from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
-
-# Ensure DATABASE_URL points to the real database directory if run from backend/
-if not Path("./database").exists() and Path("../database").exists():
-    os.environ.setdefault("DATABASE_URL", "sqlite:///../database/accesssync.db")
-
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from app.database import Base, get_db
+import app.database as app_db
 from app.main import app
-from app.database import SessionLocal
+
+if not Path("./database").exists() and Path("../database").exists():
+    TEST_DB = "sqlite:///../database/test_accesssync.db"
+else:
+    TEST_DB = "sqlite:///./database/test_accesssync.db"
+
+engine = create_engine(TEST_DB, connect_args={"check_same_thread": False})
+TestSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Point app_db to the test database during test runs
+app_db.engine = engine
+app_db.SessionLocal = TestSession
 
 
-@pytest.fixture
-def client():
-    """Provides a TestClient for the FastAPI application."""
-    return TestClient(app)
+@pytest.fixture(autouse=True)
+def setup_db():
+    Base.metadata.create_all(bind=engine)
+    yield
+    Base.metadata.drop_all(bind=engine)
 
 
 @pytest.fixture
 def db_session():
-    """Provides a database session for testing."""
-    session = SessionLocal()
+    s = TestSession()
     try:
-        yield session
+        yield s
     finally:
-        session.close()
+        s.close()
+
+
+@pytest.fixture
+def client(db_session):
+    def override():
+        try:
+            yield db_session
+        finally:
+            pass
+
+    app.dependency_overrides[get_db] = override
+    with TestClient(app) as c:
+        yield c
+    app.dependency_overrides.clear()
