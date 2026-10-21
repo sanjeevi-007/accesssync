@@ -17,11 +17,9 @@ import { LibraryPage } from './pages/LibraryPage';
 import { InstructionsPage } from './pages/InstructionsPage';
 import { AssessmentsPage } from './pages/AssessmentsPage';
 
-import {
-  ScansPlaceholder,
-  ReportsPlaceholder,
-  SettingsPlaceholder,
-} from './pages/StaffPlaceholders';
+import { LiveScansPage } from './pages/LiveScansPage';
+import { ReportsPage } from './pages/ReportsPage';
+import { SettingsPlaceholder } from './pages/StaffPlaceholders';
 
 export const App: React.FC = () => {
   return (
@@ -59,8 +57,8 @@ export const App: React.FC = () => {
             <Route path="library" element={<LibraryPage />} />
             <Route path="instructions" element={<InstructionsPage />} />
             <Route path="assessments" element={<AssessmentsPage />} />
-            <Route path="scans" element={<ScansPlaceholder />} />
-            <Route path="reports" element={<ReportsPlaceholder />} />
+            <Route path="scans" element={<LiveScansPage />} />
+            <Route path="reports" element={<ReportsPage />} />
             <Route path="settings" element={<SettingsPlaceholder />} />
           </Route>
 

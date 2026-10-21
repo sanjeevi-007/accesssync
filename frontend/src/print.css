@@ -1,0 +1,142 @@
+/* ACCESS-EASE (AccessSync) - Print Stylesheet */
+
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+  .print-score-text {
+    display: none;
+  }
+}
+
+@media print {
+  /* Hide non-printable elements */
+  nav,
+  aside,
+  header,
+  button,
+  .no-print,
+  .sidebar,
+  .topbar,
+  [role="navigation"],
+  select,
+  input,
+  .filter-controls,
+  .modal-backdrop,
+  [aria-modal="true"] {
+    display: none !important;
+  }
+
+  /* Reset layout, background colors, and force black-on-white */
+  html,
+  body,
+  #root,
+  main,
+  .print-container {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Show print-only header and footer */
+  .print-only {
+    display: block !important;
+  }
+
+  .print-header {
+    display: block !important;
+    font-size: 16pt;
+    font-weight: bold;
+    color: #000000 !important;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 8px;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+
+  .print-footer {
+    display: block !important;
+    font-size: 9pt;
+    color: #333333 !important;
+    border-top: 1px solid #666666;
+    padding-top: 8px;
+    margin-top: 24px;
+    text-align: center;
+  }
+
+  /* Show URLs after links */
+  a[href^="http"]::after,
+  a[href^="/"]::after {
+    content: " (" attr(href) ")";
+    font-size: 85%;
+    color: #333333;
+  }
+
+  /* Page breaks before each report section */
+  .report-section {
+    page-break-before: always;
+    break-before: page;
+    margin-bottom: 24px;
+  }
+
+  .report-section:first-of-type {
+    page-break-before: avoid;
+    break-before: avoid;
+  }
+
+  /* Tables: show borders, full width */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    border: 1px solid #000000 !important;
+    margin-top: 12px;
+    margin-bottom: 16px;
+    page-break-inside: auto;
+  }
+
+  th,
+  td {
+    border: 1px solid #333333 !important;
+    padding: 6px 10px !important;
+    color: #000000 !important;
+    background: #ffffff !important;
+    text-align: left;
+    font-size: 10pt !important;
+  }
+
+  th {
+    background-color: #f3f4f6 !important;
+    font-weight: bold !important;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  /* Score indicator: show as text, hide circular progress */
+  .print-score-circle {
+    display: none !important;
+  }
+
+  .print-score-text {
+    display: block !important;
+    font-size: 18pt !important;
+    font-weight: bold !important;
+    color: #000000 !important;
+    margin: 8px 0;
+  }
+
+  /* Ensure card backgrounds and borders are clean for printing */
+  .print-card {
+    border: 1px solid #cccccc !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    padding: 12px !important;
+    margin-bottom: 16px !important;
+  }
+}

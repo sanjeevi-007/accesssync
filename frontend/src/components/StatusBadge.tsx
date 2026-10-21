@@ -12,6 +12,8 @@ import {
 } from 'lucide-react';
 
 export type StatusType =
+  | 'accepted'
+  | 'rejected'
   | 'pass'
   | 'needs_improvement'
   | 'fail'
@@ -28,6 +30,25 @@ export const StatusBadge: React.FC<{ status: StatusType; className?: string }> =
   className = '',
 }) => {
   switch (status.toLowerCase()) {
+    case 'accepted':
+      return (
+        <span
+          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-semibold bg-emerald-50 text-[var(--color-success)] border border-emerald-200 ${className}`}
+        >
+          <CheckCircle2 className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+          <span>Accepted</span>
+        </span>
+      );
+
+    case 'rejected':
+      return (
+        <span
+          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-semibold bg-red-50 text-[var(--color-danger)] border border-red-200 ${className}`}
+        >
+          <XCircle className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+          <span>Rejected</span>
+        </span>
+      );
     case 'pass':
       return (
         <span

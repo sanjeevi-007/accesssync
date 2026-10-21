@@ -6,7 +6,8 @@ import { FormField } from '../components/FormField';
 import { StatusBadge } from '../components/StatusBadge';
 import { SampleBadge } from '../components/SampleBadge';
 import { ErrorMessage } from '../components/ErrorMessage';
-import { Plus, Radio, Edit2, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { Plus, Radio, Edit2, ShieldAlert, CheckCircle2, Download } from 'lucide-react';
+import { exportToCsv } from '../utils/exportCsv';
 
 interface RfidCardItem {
   id: number;
@@ -310,6 +311,51 @@ export const CardsPage: React.FC = () => {
     },
   ];
 
+  const handleExportCsv = async () => {
+    try {
+      const params: string[] = ['limit=100'];
+      if (filterActive === 'active') params.push('is_active=true');
+      if (filterActive === 'inactive') params.push('is_active=false');
+      if (filterVisitorId !== 'all') params.push(`visitor_id=${filterVisitorId}`);
+
+      const res = await apiClient<{ items: RfidCardItem[] }>(`/api/cards?${params.join('&')}`);
+      const exportItems = res.items || cards;
+
+      const headers = ['Card UID', 'Visitor ID', 'Mode', 'Label', 'Status', 'Sample', 'Created At'];
+      const rows = exportItems.map((c) => {
+        const v = visitors.find((vis) => vis.id === c.visitor_id);
+        const mode = v ? v.mode : `Visitor #${c.visitor_id}`;
+        return [
+          c.uid,
+          c.visitor_id,
+          mode,
+          c.label || '',
+          c.is_active ? 'active' : 'inactive',
+          c.is_sample ? 'sample' : 'real',
+          c.created_at || '',
+        ];
+      });
+
+      exportToCsv(`rfid_cards_${new Date().toISOString().slice(0, 10)}.csv`, headers, rows);
+    } catch {
+      const headers = ['Card UID', 'Visitor ID', 'Mode', 'Label', 'Status', 'Sample', 'Created At'];
+      const rows = cards.map((c) => {
+        const v = visitors.find((vis) => vis.id === c.visitor_id);
+        const mode = v ? v.mode : `Visitor #${c.visitor_id}`;
+        return [
+          c.uid,
+          c.visitor_id,
+          mode,
+          c.label || '',
+          c.is_active ? 'active' : 'inactive',
+          c.is_sample ? 'sample' : 'real',
+          c.created_at || '',
+        ];
+      });
+      exportToCsv(`rfid_cards_${new Date().toISOString().slice(0, 10)}.csv`, headers, rows);
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Top Header & Actions */}
@@ -321,22 +367,34 @@ export const CardsPage: React.FC = () => {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={() => {
-            setFormUid('');
-            setFormLabel('');
-            setFormError(null);
-            setCaptureMessage('');
-            stopCapturing();
-            if (visitors.length > 0) setFormVisitorId(visitors[0].id);
-            setCreateModalOpen(true);
-          }}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded bg-[var(--color-primary)] text-white text-sm font-semibold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-primary)] shadow-none"
-        >
-          <Plus className="w-4 h-4" aria-hidden="true" />
-          <span>Register New Card</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={handleExportCsv}
+            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded border border-gray-300 bg-white text-[var(--color-text)] text-sm font-semibold hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+            aria-label="Export card list as CSV file"
+          >
+            <Download className="w-4 h-4 text-[var(--color-muted)]" aria-hidden="true" />
+            <span>Export CSV</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setFormUid('');
+              setFormLabel('');
+              setFormError(null);
+              setCaptureMessage('');
+              stopCapturing();
+              if (visitors.length > 0) setFormVisitorId(visitors[0].id);
+              setCreateModalOpen(true);
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded bg-[var(--color-primary)] text-white text-sm font-semibold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-primary)] shadow-none"
+          >
+            <Plus className="w-4 h-4" aria-hidden="true" />
+            <span>Register New Card</span>
+          </button>
+        </div>
       </div>
 
       {successMsg && (
