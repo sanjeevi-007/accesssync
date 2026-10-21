@@ -104,6 +104,30 @@ The project follows a linear, single-branch feature flow merged into `main`:
 | `feature/visitor-mode` | Phase 6: Visitor wayfinding modes (Blind, Hearing, Low-Vision) |
 | `feature/reports-live` | Phase 8: Real-time scan feed, summary reports, print, CSV export |
 | `feature/a11y-audit` | Phase 9: Accessibility audit, skip links, WCAG AA compliance, docs |
+| `feature/esp32-firmware`| Phase 10: ESP32 RFID reader firmware, config template, pinouts |
+| `feature/e2e-demo` | Phase 11: End-to-end integration, hardware simulator CLI, demo guide |
+
+---
+
+## Live Demonstration & Hardware Simulator
+
+To demonstrate the full end-to-end accessibility guidance flow without requiring physical ESP32 and RC522 hardware attached, use the built-in Python CLI simulator:
+
+```bash
+# 1. Automated demonstration sequence (taps Blind, Hearing, Low-Vision & invalid cards)
+python scripts/demo_simulator.py --mode sequence --interval 2.5
+
+# 2. Simulate single card tap (Blind mode: AAAAAAAA, Hearing: BBBBBBBB, Low-Vision: CCCCCCCC)
+python scripts/demo_simulator.py --mode scan --uid AAAAAAAA
+
+# 3. Simulate hardware telemetry heartbeat ping
+python scripts/demo_simulator.py --mode heartbeat
+
+# 4. Stress test server performance and scan idempotency (20 rapid scans)
+python scripts/demo_simulator.py --mode stress
+```
+
+> **Live Presentation Walkthrough:** See [`docs/DEMO_GUIDE.md`](docs/DEMO_GUIDE.md) for full step-by-step presentation scenarios, WebSocket verification, and troubleshooting fallback procedures.
 
 ---
 
