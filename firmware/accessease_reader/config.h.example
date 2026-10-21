@@ -1,0 +1,51 @@
+/**
+ * ACCESS-EASE RFID Reader Configuration Template
+ * Grand Plaza Mall Accessibility Guidance System
+ * 
+ * Instructions:
+ * 1. Copy this file to "config.h":
+ *    cp config.h.example config.h
+ * 2. Edit "config.h" with your Shopping Mall Wi-Fi credentials and backend server IP address.
+ * 3. Never commit "config.h" with real credentials to version control.
+ *    ("config.h" is included in .gitignore)
+ */
+
+#ifndef ACCESSEASE_CONFIG_H
+#define ACCESSEASE_CONFIG_H
+
+// =============================================================================
+// Shopping Mall Wi-Fi Configuration
+// =============================================================================
+#define WIFI_SSID           "MALL_GUEST_WIFI"
+#define WIFI_PASS           "YOUR_WIFI_PASSWORD"
+
+// =============================================================================
+// Backend Server Configuration
+// =============================================================================
+// Replace 192.168.X.X with the local IP address of the machine running Grand Plaza Mall server
+#define BACKEND_URL         "http://192.168.X.X:8000"
+#define DEVICE_TOKEN        "dev-token-accesssync-2024"
+#define DEVICE_ID           "reader-01"
+
+// =============================================================================
+// Operational Timings (milliseconds)
+// =============================================================================
+#define HEARTBEAT_INTERVAL_MS   30000       // Send heartbeat telemetry every 30 seconds
+#define DEBOUNCE_MS             3000        // Ignore duplicate card taps at mall kiosks within 3 seconds
+
+// =============================================================================
+// Hardware Pin Definitions (ESP32 DevKit V1 -> RC522 RFID Module)
+// =============================================================================
+#define SS_PIN      5       // RC522 SDA (SS / Chip Select) -> GPIO 5
+#define RST_PIN     22      // RC522 RST (Reset)            -> GPIO 22
+#define SCK         18      // RC522 SCK (SPI Clock)        -> GPIO 18
+#define MISO        19      // RC522 MISO (SPI Master In)   -> GPIO 19
+#define MOSI        23      // RC522 MOSI (SPI Master Out)  -> GPIO 23
+#define LED_PIN     2       // Onboard Status LED           -> GPIO 2
+
+// Compatibility aliases
+#define SCK_PIN     SCK
+#define MISO_PIN    MISO
+#define MOSI_PIN    MOSI
+
+#endif // ACCESSEASE_CONFIG_H
