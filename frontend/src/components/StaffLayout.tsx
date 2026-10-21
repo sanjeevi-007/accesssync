@@ -50,14 +50,6 @@ export const StaffLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[var(--color-bg)] flex flex-col">
-      {/* Skip to main content accessibility link */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--color-primary)] focus:text-white focus:rounded focus:outline-none focus:ring-2 focus:ring-white font-medium"
-      >
-        Skip to main content
-      </a>
-
       <div className="flex flex-1">
         {/* Sidebar for Desktop */}
         <aside

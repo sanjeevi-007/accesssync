@@ -25,6 +25,14 @@ export const App: React.FC = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
+        {/* First focusable element for keyboard accessibility */}
+        <a
+          href="#main-content"
+          className="skip-link"
+        >
+          Skip to main content
+        </a>
+
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<LandingPage />} />

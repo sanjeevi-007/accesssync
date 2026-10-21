@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { useLiveScans } from '../hooks/useLiveScans';
 import type { LiveScanEvent, ScanInstruction } from '../hooks/useLiveScans';
 import { BlindView } from '../modes/BlindView';
@@ -182,7 +183,7 @@ export const VisitorPage: React.FC = () => {
         </span>
       </header>
 
-      <main className="text-center max-w-xl mx-auto my-auto space-y-6">
+      <main id="main-content" tabIndex={-1} className="text-center max-w-xl mx-auto my-auto space-y-6 outline-none">
         {/* Subtle pulsing icon (no pulse if prefers-reduced-motion) */}
         <div
           className="w-24 h-24 rounded-full bg-white border-4 border-[var(--color-primary)] flex items-center justify-center mx-auto shadow-md"
@@ -205,9 +206,17 @@ export const VisitorPage: React.FC = () => {
         </p>
       </main>
 
-      <footer className="text-center text-xs text-[var(--color-muted)] space-y-1">
+      <footer className="text-center text-xs text-[var(--color-muted)] space-y-1.5 pt-4">
         <p>City Central Library Accessibility Guidance Terminal &bull; Active &amp; Ready</p>
         <p>Supports Blind, Hearing, and Low-Vision accessibility guidance.</p>
+        <p>
+          <Link
+            to="/accessibility"
+            className="text-xs text-[var(--color-primary)] hover:underline font-semibold"
+          >
+            Accessibility Conformance Statement
+          </Link>
+        </p>
       </footer>
     </div>
   );

@@ -37,6 +37,13 @@ export const FormField: React.FC<FormFieldProps> = ({
   className = '',
 }) => {
   const id = `field-${name}`;
+  const errorId = `${id}-error`;
+  const helpId = `${id}-help`;
+
+  const describedBy = [
+    error ? errorId : null,
+    helpText ? helpId : null,
+  ].filter(Boolean).join(' ') || undefined;
 
   if (type === 'checkbox') {
     return (
@@ -49,6 +56,8 @@ export const FormField: React.FC<FormFieldProps> = ({
             checked={!!value}
             onChange={onChange}
             disabled={disabled}
+            aria-invalid={error ? true : undefined}
+            aria-describedby={describedBy}
             className="h-4 w-4 rounded border-gray-300 text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
           />
         </div>
@@ -56,8 +65,16 @@ export const FormField: React.FC<FormFieldProps> = ({
           <label htmlFor={id} className="font-medium text-[var(--color-text)]">
             {label} {required && <span className="text-[var(--color-danger)]">*</span>}
           </label>
-          {helpText && <p className="text-xs text-[var(--color-muted)]">{helpText}</p>}
-          {error && <p className="text-xs text-[var(--color-danger)] mt-1">{error}</p>}
+          {helpText && (
+            <p id={helpId} className="text-xs text-[var(--color-muted)]">
+              {helpText}
+            </p>
+          )}
+          {error && (
+            <p id={errorId} role="alert" className="text-xs text-[var(--color-danger)] mt-1 font-medium">
+              {error}
+            </p>
+          )}
         </div>
       </div>
     );
@@ -77,6 +94,8 @@ export const FormField: React.FC<FormFieldProps> = ({
           onChange={onChange}
           disabled={disabled}
           required={required}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={describedBy}
           className={`block w-full rounded border ${
             error ? 'border-[var(--color-danger)]' : 'border-gray-300'
           } bg-white px-3 py-2 text-sm text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] disabled:bg-gray-100`}
@@ -97,6 +116,8 @@ export const FormField: React.FC<FormFieldProps> = ({
           disabled={disabled}
           required={required}
           placeholder={placeholder}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={describedBy}
           className={`block w-full rounded border ${
             error ? 'border-[var(--color-danger)]' : 'border-gray-300'
           } bg-white px-3 py-2 text-sm text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] disabled:bg-gray-100`}
@@ -111,14 +132,24 @@ export const FormField: React.FC<FormFieldProps> = ({
           disabled={disabled}
           required={required}
           placeholder={placeholder}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={describedBy}
           className={`block w-full rounded border ${
             error ? 'border-[var(--color-danger)]' : 'border-gray-300'
           } bg-white px-3 py-2 text-sm text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] disabled:bg-gray-100`}
         />
       )}
 
-      {helpText && !error && <p className="text-xs text-[var(--color-muted)]">{helpText}</p>}
-      {error && <p className="text-xs text-[var(--color-danger)] mt-1 font-medium">{error}</p>}
+      {helpText && !error && (
+        <p id={helpId} className="text-xs text-[var(--color-muted)]">
+          {helpText}
+        </p>
+      )}
+      {error && (
+        <p id={errorId} role="alert" className="text-xs text-[var(--color-danger)] mt-1 font-medium">
+          {error}
+        </p>
+      )}
     </div>
   );
 };

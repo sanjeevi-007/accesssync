@@ -71,7 +71,7 @@ export const ChangePasswordPage: React.FC = () => {
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
+      <main id="main-content" tabIndex={-1} className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0 outline-none">
         <div className="bg-[var(--color-surface)] py-8 px-6 sm:px-10 rounded-lg border border-[var(--color-surface)] shadow-none">
           {errorMsg && (
             <div
@@ -157,7 +157,7 @@ export const ChangePasswordPage: React.FC = () => {
             </div>
           </form>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

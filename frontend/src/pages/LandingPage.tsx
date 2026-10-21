@@ -28,7 +28,7 @@ export const LandingPage: React.FC = () => {
         </nav>
       </header>
 
-      <main className="max-w-4xl mx-auto w-full my-auto py-12 text-center">
+      <main id="main-content" tabIndex={-1} className="max-w-4xl mx-auto w-full my-auto py-12 text-center outline-none">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--color-surface)] text-xs font-semibold text-[var(--color-primary)] mb-6">
           <Shield className="w-4 h-4" aria-hidden="true" />
           Public Library Accessibility Guidance Platform

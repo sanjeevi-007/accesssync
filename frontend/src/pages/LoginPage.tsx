@@ -54,7 +54,7 @@ export const LoginPage: React.FC = () => {
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
+      <main id="main-content" tabIndex={-1} className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0 outline-none">
         <div className="bg-[var(--color-surface)] py-8 px-6 sm:px-10 rounded-lg border border-[var(--color-surface)] shadow-none">
           {errorMsg && (
             <div
@@ -119,16 +119,26 @@ export const LoginPage: React.FC = () => {
             </div>
           </form>
 
-          <div className="mt-6 border-t border-gray-300 pt-4 text-center">
+          <div className="mt-6 border-t border-gray-300 pt-4 flex flex-col items-center gap-2 text-center">
             <Link
               to="/visitor"
-              className="text-xs font-medium text-[var(--color-primary)] hover:underline"
+              className="text-xs font-semibold text-[var(--color-primary)] hover:underline"
             >
               Go to Visitor Guidance Screen &rarr;
             </Link>
+            <Link
+              to="/accessibility"
+              className="text-xs text-[var(--color-muted)] hover:underline"
+            >
+              Accessibility Conformance Statement
+            </Link>
           </div>
         </div>
-      </div>
+      </main>
+
+      <footer className="mt-8 text-center text-xs text-[var(--color-muted)]">
+        <p>ACCESS-EASE &bull; City Central Library Accessibility Portal</p>
+      </footer>
     </div>
   );
 };

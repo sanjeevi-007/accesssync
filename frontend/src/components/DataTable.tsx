@@ -94,8 +94,7 @@ export function DataTable<T>({
               data.map((item, rowIdx) => (
                 <tr
                   key={keyExtractor(item, rowIdx)}
-                  tabIndex={0}
-                  className="hover:bg-gray-50 focus:outline-none focus:bg-blue-50 transition-none"
+                  className="hover:bg-gray-50 transition-none"
                 >
                   {columns.map((col, colIdx) => (
                     <td
